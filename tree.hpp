@@ -44,12 +44,20 @@ int Tree::string_to_hash(string key)
     return str_hash(key);
 }
 
+/* Tree insert takes a key, a value, and a Node pointer
+ * Returns void.
+ *
+ * This function is a tail recursive depth first insert
+ * algorithm. The time complexity in the worst case is
+ * O(N). On average it will be O(log(N)) assuming the
+ * tree is reasonably balanced.
+ */
 void Tree::insert(int key, int value, Node *leaf)
 {
     Node * new_node;
     if(key < leaf->get_key()) {
         if(leaf->get_left() != NULL) {
-            insert(key, value, leaf->get_left());
+            return insert(key, value, leaf->get_left());
         } else {
             new_node = new Node();
             new_node->set_key(key);
@@ -58,7 +66,7 @@ void Tree::insert(int key, int value, Node *leaf)
         }
     } else if(key > leaf->get_key()) {
         if(leaf->get_right() != NULL) {
-            insert(key, value, leaf->get_right());
+            return insert(key, value, leaf->get_right());
         } else {
             new_node = new Node();
             new_node->set_key(key);
@@ -70,6 +78,14 @@ void Tree::insert(int key, int value, Node *leaf)
     }
 }
 
+/* Tree search takes a key, and a Node pointer
+ * Returns a Node *.
+ *
+ * This function is a tail recursive depth first search
+ * algorithm. The time complexity in the worst case is
+ * O(N). On average it will be O(log(N)) assuming the
+ * tree is reasonably balanced.
+ */
 Node *Tree::search(int key, Node *leaf)
 {
     if(leaf != NULL) {

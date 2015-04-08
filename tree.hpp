@@ -57,6 +57,7 @@ void Tree::insert(int key, int value, Node *leaf)
     Node * new_node;
 
     if(key < leaf->get_key()) {
+
         if(leaf->get_left() != NULL) {
             return insert(key, value, leaf->get_left());
         } else {
@@ -65,7 +66,9 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node->set_value(value);
             leaf->set_left(new_node);
         }
+
     } else if(key > leaf->get_key()) {
+
         if(leaf->get_right() != NULL) {
             return insert(key, value, leaf->get_right());
         } else {
@@ -74,6 +77,7 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node->set_value(value);
             leaf->set_right(new_node);
         }
+
     } else if(key == leaf->get_key()) {
         leaf->set_value(value);
     }

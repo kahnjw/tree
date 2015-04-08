@@ -1,15 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "node.hpp"
 
 using namespace std;
 
-struct node
-{
-    int key;
-    int value;
-    node *left;
-    node *right;
-};
 
 class Tree
 {
@@ -18,18 +12,18 @@ class Tree
         ~Tree();
 
         void insert(string key, int value);
-        node *search(string key);
+        Node *search(string key);
         void destroy_tree();
         void print();
 
     private:
         int string_to_hash(string key);
-        void destroy_tree(node *leaf);
-        void insert(int key, int value, node *leaf);
-        void print(node *leaf);
-        node *search(int key, node *leaf);
+        void destroy_tree(Node *leaf);
+        void insert(int key, int value, Node *leaf);
+        void print(Node *leaf);
+        Node *search(int key, Node *leaf);
 
-        node *root;
+        Node *root;
 };
 
 Tree::Tree()
@@ -50,51 +44,41 @@ int Tree::string_to_hash(string key)
     return str_hash(key);
 }
 
-void Tree::destroy_tree(node *leaf)
+void Tree::insert(int key, int value, Node *leaf)
 {
-    if(leaf != NULL) {
-        destroy_tree(leaf->right);
-        destroy_tree(leaf->left);
-        delete leaf;
+    Node * new_node;
+    if(key < leaf->get_key()) {
+        if(leaf->get_left() != NULL) {
+            insert(key, value, leaf->get_left());
+        } else {
+            new_node = new Node();
+            new_node->set_key(key);
+            new_node->set_value(value);
+            leaf->set_left(new_node);
+        }
+    } else if(key > leaf->get_key()) {
+        if(leaf->get_right() != NULL) {
+            insert(key, value, leaf->get_right());
+        } else {
+            new_node = new Node();
+            new_node->set_key(key);
+            new_node->set_value(value);
+            leaf->set_right(new_node);
+        }
+    } else if(key == leaf->get_key()) {
+        leaf->set_value(value);
     }
 }
 
-void Tree::insert(int key, int value, node *leaf)
-{
-    if(key < leaf->key) {
-        if(leaf->left != NULL) {
-            insert(key, value, leaf->left);
-        } else {
-            leaf->left = new node;
-            leaf->left->key = key;
-            leaf->left->value = value;
-            leaf->left->left = NULL;
-            leaf->left->right = NULL;
-        }
-    } else if(key > leaf->key) {
-        if(leaf->right != NULL) {
-            insert(key, value, leaf->right);
-        } else {
-            leaf->right = new node;
-            leaf->right->key = key;
-            leaf->right->value = value;
-            leaf->right->left = NULL;
-            leaf->right->right = NULL;
-        }
-    } else if(key == leaf->key) {
-        leaf->value = value;
-    }
-}
-
-node *Tree::search(int key, node *leaf)
+Node *Tree::search(int key, Node *leaf)
 {
     if(leaf != NULL) {
-        if(key == leaf->key) {
+        if(key == leaf->get_key()) {
             return leaf;
-        } else if (key < leaf->key) {
-            return search(key, leaf->left);
+        } else if (key < leaf->get_key()) {
+            return search(key, leaf->get_left());
         }
-        return search(key, leaf->right);
+        return search(key, leaf->get_right());
     }
     return NULL;
 }
@@ -106,15 +90,13 @@ void Tree:: insert(string key, int value)
     if(root != NULL) {
         insert(hash_key, value, root);
     } else {
-        root = new node;
-        root->value = value;
-        root->key = hash_key;
-        root->left = NULL;
-        root->right = NULL;
+        root = new Node();
+        root->set_value(value);
+        root->set_key(hash_key);
     }
 }
 
-node *Tree::search(string key)
+Node *Tree::search(string key)
 {
     int hash_key = string_to_hash(key);
     return search(hash_key, root);
@@ -122,17 +104,17 @@ node *Tree::search(string key)
 
 void Tree::destroy_tree()
 {
-    destroy_tree(root);
+    delete root;
 }
 
-void Tree::print(node *leaf)
+void Tree::print(Node *leaf)
 {
-    if(leaf->left != NULL) {
-        print(leaf->left);
+    if(leaf->get_left() != NULL) {
+        print(leaf->get_left());
     }
 
-    if(leaf->right != NULL) {
-        print(leaf->right);
+    if(leaf->get_right() != NULL) {
+        print(leaf->get_right());
     }
 }
 

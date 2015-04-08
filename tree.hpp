@@ -55,6 +55,7 @@ int Tree::string_to_hash(string key)
 void Tree::insert(int key, int value, Node *leaf)
 {
     Node * new_node;
+
     if(key < leaf->get_key()) {
         if(leaf->get_left() != NULL) {
             return insert(key, value, leaf->get_left());
@@ -89,13 +90,17 @@ void Tree::insert(int key, int value, Node *leaf)
 Node *Tree::search(int key, Node *leaf)
 {
     if(leaf != NULL) {
+
         if(key == leaf->get_key()) {
             return leaf;
         } else if (key < leaf->get_key()) {
             return search(key, leaf->get_left());
         }
+
         return search(key, leaf->get_right());
+
     }
+
     return NULL;
 }
 

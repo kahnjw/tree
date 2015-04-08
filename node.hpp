@@ -17,12 +17,14 @@ class Node
         Node * get_right();
         void set_left(Node * left);
         void set_right(Node * right);
+        bool is_red();
 
     private:
         Node * left;
         Node * right;
         int key;
         int value;
+        bool red;
 };
 
 Node::Node()
@@ -31,6 +33,7 @@ Node::Node()
     right = NULL;
     key = 0;
     value = 0;
+    red = true;
 }
 
 Node::~Node()
@@ -77,4 +80,9 @@ void Node::set_left(Node * _left)
 void Node::set_right(Node * _right)
 {
     right = _right;
+}
+
+bool Node::is_red()
+{
+    return red;
 }

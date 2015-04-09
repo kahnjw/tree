@@ -53,6 +53,7 @@ TEST_CASE("Stress test", "[Tree]")
 
     for(i = 0; i < 100000; i++) {
         n = t.search(to_string(i));
+        REQUIRE(n != NULL);
         REQUIRE(i == n->get_value());
     }
 }

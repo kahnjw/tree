@@ -49,27 +49,34 @@ int Tree::string_to_hash(string key)
 
 void Tree::trinode_restructure(Node * child)
 {
+    bool grandparent_is_left;
     Node * parent;
     Node * grandparent;
     Node * brother;
     Node * uncle;
-    Node * great_grand_parent;
+    Node * great_grandparent;
 
     parent = child->get_parent();
     uncle = parent->get_sibling();
     grandparent = parent->get_parent();
-    great_grand_parent = grandparent->get_parent();
+    great_grandparent = grandparent->get_parent();
+    grandparent_is_left = grandparent->is_left();
 
     if(child->is_left() && parent->is_left()) {
 
         brother = child->get_sibling();
 
         grandparent->set_left(brother);
-        grandparent->set_right(uncle);
         grandparent->set_parent(parent);
 
         parent->set_right(grandparent);
-        parent->set_parent(great_grand_parent);
+        parent->set_parent(great_grandparent);
+
+        if(grandparent_is_left) {
+            great_grandparent->set_left(parent);
+        } else {
+            great_grandparent->set_right(parent);
+        }
 
         if(brother != NULL) {
             brother->set_parent(grandparent);
@@ -129,7 +136,6 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node = new Node();
             new_node->set_key(key);
             new_node->set_value(value);
-            new_node->set_red();
             new_node->set_parent(leaf);
             leaf->set_left(new_node);
 
@@ -146,7 +152,6 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node = new Node();
             new_node->set_key(key);
             new_node->set_value(value);
-            new_node->set_red();
             new_node->set_parent(leaf);
             leaf->set_right(new_node);
 
@@ -170,8 +175,8 @@ void Tree::insert(int key, int value, Node *leaf)
  */
 Node *Tree::search(int key, Node *leaf)
 {
-    if(leaf != NULL) {
 
+    if(leaf != NULL) {
         if(key == leaf->get_key()) {
             return leaf;
         } else if (key < leaf->get_key()) {

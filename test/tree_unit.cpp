@@ -38,6 +38,50 @@ TEST_CASE("Tree can update existing nodes", "[Tree]")
     REQUIRE(9002 == n->get_value());
 }
 
+TEST_CASE("Trinode restructure", "[Tree]")
+{
+    Tree t = Tree();
+
+    Node * grandparent = new Node();
+    Node * parent = new Node();
+    Node * child = new Node();
+    Node * uncle = new Node();
+    Node * brother = new Node();
+    Node * great_grandparent = new Node();
+
+    grandparent->set_left(parent);
+    grandparent->set_right(uncle);
+    grandparent->set_parent(great_grandparent);
+    grandparent->set_black();
+
+    great_grandparent->set_left(grandparent);
+    great_grandparent->set_black();
+
+    parent->set_left(child);
+    parent->set_right(brother);
+    parent->set_parent(grandparent);
+    parent->set_red();
+
+    child->set_parent(parent);
+    child->set_red();
+
+    uncle->set_parent(grandparent);
+    uncle->set_black();
+
+    t.set_root(great_grandparent);
+    t.trinode_restructure(child);
+
+    REQUIRE(child->is_red());
+    REQUIRE(parent->is_black());
+    REQUIRE(parent->get_left() == child);
+    REQUIRE(child->get_parent() == parent);
+    REQUIRE(grandparent->get_parent() == parent);
+    REQUIRE(parent->get_right() == grandparent);
+    REQUIRE(grandparent->get_left() == brother);
+    REQUIRE(brother->get_parent() == grandparent);
+    REQUIRE(grandparent->is_red());
+}
+
 TEST_CASE("Stress test", "[Tree]")
 {
     Tree t = Tree();
@@ -46,12 +90,12 @@ TEST_CASE("Stress test", "[Tree]")
     int i;
     string i_str;
 
-    for(i = 0; i < 100000; i++) {
+    for(i = 0; i < 10; i++) {
         i_str = to_string(i);
         t.insert(i_str, i);
     }
 
-    for(i = 0; i < 100000; i++) {
+    for(i = 0; i < 10; i++) {
         n = t.search(to_string(i));
         REQUIRE(n != NULL);
         REQUIRE(i == n->get_value());

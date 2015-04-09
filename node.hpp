@@ -22,6 +22,7 @@ class Node
         bool is_red();
         bool is_black();
         bool is_left();
+        bool is_right();
         void set_red();
         void set_black();
         void set_parent(Node * parent);
@@ -183,4 +184,9 @@ bool Node::is_left()
      * node, and its sibling is the left node.
      */
     return false;
+}
+
+bool Node::is_right()
+{
+    return !is_left();
 }

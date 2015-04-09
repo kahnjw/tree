@@ -15,15 +15,16 @@ class Tree
         Node *search(string key);
         void destroy_tree();
         void print();
+        void trinode_restructure(Node * child);
+        void set_root(Node * _node);
 
     private:
         bool is_left(Node * node);
         int string_to_hash(string key);
         void destroy_tree(Node *leaf);
         void insert(int key, int value, Node *leaf);
-        void print(Node *leaf);
+        void print(Node *leaf, int level, string side);
         void doubleRed(Node * child);
-        void trinode_restructure(Node * child);
         Node *search(int key, Node *leaf);
 
         Node *root;
@@ -39,6 +40,11 @@ Tree::~Tree()
     destroy_tree();
 }
 
+void Tree::set_root(Node * _node)
+{
+    root = _node;
+}
+
 int Tree::string_to_hash(string key)
 {
     /* TODO: Use a more robust hashing algorithm */
@@ -52,12 +58,10 @@ void Tree::trinode_restructure(Node * child)
     bool grandparent_is_left;
     Node * parent;
     Node * grandparent;
-    Node * brother;
-    Node * uncle;
     Node * great_grandparent;
+    Node * brother;
 
     parent = child->get_parent();
-    uncle = parent->get_sibling();
     grandparent = parent->get_parent();
     great_grandparent = grandparent->get_parent();
     grandparent_is_left = grandparent->is_left();
@@ -72,9 +76,9 @@ void Tree::trinode_restructure(Node * child)
         parent->set_right(grandparent);
         parent->set_parent(great_grandparent);
 
-        if(grandparent_is_left) {
+        if(grandparent_is_left && great_grandparent != NULL) {
             great_grandparent->set_left(parent);
-        } else {
+        } else if (great_grandparent != NULL) {
             great_grandparent->set_right(parent);
         }
 
@@ -82,8 +86,74 @@ void Tree::trinode_restructure(Node * child)
             brother->set_parent(grandparent);
         }
 
-    } else if(!child->is_left() && parent->is_left()) {
-        // TODO
+        parent->set_black();
+        grandparent->set_red();
+
+    } else if(child->is_right() && parent->is_left()) {
+
+        parent->set_right(NULL);
+        parent->set_parent(child);
+
+        grandparent->set_left(NULL);
+        grandparent->set_parent(child);
+
+        child->set_left(parent);
+        child->set_right(grandparent);
+        child->set_parent(great_grandparent);
+
+        if(grandparent_is_left && great_grandparent != NULL) {
+            great_grandparent->set_left(child);
+        } else if (great_grandparent != NULL) {
+            great_grandparent->set_right(child);
+        }
+
+        child->set_black();
+        grandparent->set_red();
+
+    } else if(child->is_right() && parent->is_right()) {
+
+        brother = child->get_sibling();
+
+        grandparent->set_right(brother);
+        grandparent->set_parent(parent);
+
+        parent->set_left(grandparent);
+        parent->set_parent(great_grandparent);
+
+        if(grandparent_is_left && great_grandparent != NULL) {
+            great_grandparent->set_left(parent);
+        } else if (great_grandparent != NULL) {
+            great_grandparent->set_right(parent);
+        }
+
+        if(brother != NULL) {
+            brother->set_parent(grandparent);
+        }
+
+        grandparent->set_red();
+        parent->set_black();
+
+    } else if(child->is_left() && parent->is_right()) {
+
+        parent->set_left(NULL);
+        parent->set_parent(child);
+
+        grandparent->set_right(NULL);
+        grandparent->set_parent(child);
+
+        child->set_right(parent);
+        child->set_left(grandparent);
+        child->set_parent(great_grandparent);
+
+        if(grandparent_is_left && great_grandparent != NULL) {
+            great_grandparent->set_left(child);
+        } else if (great_grandparent != NULL) {
+            great_grandparent->set_right(child);
+        }
+
+        child->set_black();
+        grandparent->set_red();
+
     }
 }
 
@@ -215,18 +285,30 @@ void Tree::destroy_tree()
     delete root;
 }
 
-void Tree::print(Node *leaf)
+void Tree::print(Node *leaf, int level, string side)
 {
+    printf("%7s node key: %11d value: %2d level: %2d\n", side.c_str(),
+        leaf->get_key(), leaf->get_value(), level);
+
     if(leaf->get_left() != NULL) {
-        print(leaf->get_left());
+        print(leaf->get_left(), level + 1, "left");
+    } else {
+        printf("%7s node key: %11d value: %2d level: %2d found NULL left child\n",
+            side.c_str(), leaf->get_key(), leaf->get_value(), level);
     }
 
     if(leaf->get_right() != NULL) {
-        print(leaf->get_right());
+        print(leaf->get_right(), level + 1, "right");
+    } else {
+        printf("%7s node key: %11d value: %2d level: %2d found NULL right child\n",
+            side.c_str(), leaf->get_key(), leaf->get_value(), level);
     }
 }
 
 void Tree::print()
 {
-    print(root);
+    printf("\n");
+    printf("===============================================================\n");
+    print(root, 0, "root");
+    printf("===============================================================\n");
 }

@@ -17,10 +17,13 @@ class Tree
         void print();
 
     private:
+        bool is_left(Node * node);
         int string_to_hash(string key);
         void destroy_tree(Node *leaf);
         void insert(int key, int value, Node *leaf);
         void print(Node *leaf);
+        void doubleRed(Node * child);
+        void trinode_restructure(Node * child);
         Node *search(int key, Node *leaf);
 
         Node *root;
@@ -44,6 +47,68 @@ int Tree::string_to_hash(string key)
     return str_hash(key);
 }
 
+void Tree::trinode_restructure(Node * child)
+{
+    Node * parent;
+    Node * grandparent;
+    Node * brother;
+    Node * uncle;
+    Node * great_grand_parent;
+
+    parent = child->get_parent();
+    uncle = parent->get_sibling();
+    grandparent = parent->get_parent();
+    great_grand_parent = grandparent->get_parent();
+
+    if(child->is_left() && parent->is_left()) {
+
+        brother = child->get_sibling();
+
+        grandparent->set_left(brother);
+        grandparent->set_right(uncle);
+        grandparent->set_parent(parent);
+
+        parent->set_right(grandparent);
+        parent->set_parent(great_grand_parent);
+
+        if(brother != NULL) {
+            brother->set_parent(grandparent);
+        }
+
+    } else if(!child->is_left() && parent->is_left()) {
+        // TODO
+    }
+}
+
+void Tree::doubleRed(Node * child)
+{
+    Node * parent;
+    Node * grand_parent;
+    Node * uncle;
+
+    parent = child->get_parent();
+
+    if(parent == NULL) {
+        printf("Node's parent is NULL");
+        exit(1);
+    }
+
+    grand_parent = parent->get_parent();
+
+    if(grand_parent == NULL) {
+        printf("Node's grandparent is NULL");
+        exit(1);
+    }
+
+    uncle = parent->get_sibling();
+
+    if(uncle == NULL || uncle->is_black()) {
+        trinode_restructure(child);
+    } else {
+        // recoloring();
+    }
+}
+
 /* Tree insert takes a key, a value, and a Node pointer
  * Returns void.
  *
@@ -64,7 +129,13 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node = new Node();
             new_node->set_key(key);
             new_node->set_value(value);
+            new_node->set_red();
+            new_node->set_parent(leaf);
             leaf->set_left(new_node);
+
+            if(leaf->is_red()) {
+                doubleRed(new_node);
+            }
         }
 
     } else if(key > leaf->get_key()) {
@@ -75,7 +146,13 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node = new Node();
             new_node->set_key(key);
             new_node->set_value(value);
+            new_node->set_red();
+            new_node->set_parent(leaf);
             leaf->set_right(new_node);
+
+            if(leaf->is_red()) {
+                doubleRed(new_node);
+            }
         }
 
     } else if(key == leaf->get_key()) {
@@ -108,7 +185,7 @@ Node *Tree::search(int key, Node *leaf)
     return NULL;
 }
 
-void Tree:: insert(string key, int value)
+void Tree::insert(string key, int value)
 {
     int hash_key = string_to_hash(key);
 
@@ -118,6 +195,7 @@ void Tree:: insert(string key, int value)
         root = new Node();
         root->set_value(value);
         root->set_key(hash_key);
+        root->set_black();
     }
 }
 

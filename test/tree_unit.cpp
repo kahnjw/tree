@@ -4,6 +4,7 @@
 #include "lib/catch/catch.hpp"
 #include "../tree.hpp"
 
+
 TEST_CASE("Tree can get and set nodes", "[Tree]")
 {
     Tree t = Tree();
@@ -35,4 +36,23 @@ TEST_CASE("Tree can update existing nodes", "[Tree]")
     n = t.search("test key");
 
     REQUIRE(9002 == n->get_value());
+}
+
+TEST_CASE("Stress test", "[Tree]")
+{
+    Tree t = Tree();
+    Node *n;
+
+    int i;
+    string i_str;
+
+    for(i = 0; i < 100000; i++) {
+        i_str = to_string(i);
+        t.insert(i_str, i);
+    }
+
+    for(i = 0; i < 100000; i++) {
+        n = t.search(to_string(i));
+        REQUIRE(i == n->get_value());
+    }
 }

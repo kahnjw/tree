@@ -76,9 +76,10 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
         delete t;
     }
 
-    printf("---------------------------------------\n");
+    printf("------------------------------------------------\n");
     for(i = 0; i < insertion_time.size(); i++) {
-        printf("average lookup time: %8f level: %d\n", insertion_time[i], i);
+        printf("average lookup time: %8f level: %d n: %d\n",
+            insertion_time[i], i, i * 100000);
     }
-    printf("---------------------------------------\n");
+    printf("------------------------------------------------\n");
 }

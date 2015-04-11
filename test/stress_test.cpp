@@ -10,7 +10,7 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
 {
     clock_t start, end;
     double sum, average;
-    long i, j, interval;
+    unsigned long i, j, interval;
     string j_str;
     Tree<long> * t;
     vector<double> insertion_time;
@@ -48,7 +48,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
 {
     clock_t start, end;
     double sum, average;
-    long i, j, interval;
+    unsigned long i, j, interval;
     string j_str;
     Tree<long> * t;
     vector<double> insertion_time;

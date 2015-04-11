@@ -18,7 +18,7 @@ class Tree
         void trinode_restructure(Node<ObjectType> * child);
         void recolor(Node<ObjectType> * child);
         void set_root(Node<ObjectType> * _node);
-        const long sdbm(const char * str);
+        long sdbm(const char * str);
 
     private:
         bool is_root(Node<ObjectType> * node);
@@ -54,7 +54,7 @@ bool Tree<ObjectType>::is_root(Node<ObjectType> * node)
 }
 
 template <class ObjectType>
-const long Tree<ObjectType>::sdbm (const char * str)
+long Tree<ObjectType>::sdbm (const char * str)
 {
     long hash = 0;
     int c;

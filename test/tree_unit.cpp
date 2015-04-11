@@ -9,34 +9,25 @@
 TEST_CASE("Tree can get and set nodes", "[Tree]")
 {
     Tree<int> t = Tree<int>();
-    Node<int> *n1;
-    Node<int> *n2;
-    Node<int> *n3;
 
     t.insert("first key", 1);
     t.insert("second key", -10);
     t.insert("third key", 1000);
 
-    n1 = t.search("first key");
-    n2 = t.search("second key");
-    n3 = t.search("third key");
 
-    REQUIRE(1 == n1->get_value());
-    REQUIRE(-10 == n2->get_value());
-    REQUIRE(1000 == n3->get_value());
+    REQUIRE(1 == t.get("first key"));
+    REQUIRE(-10 == t.get("second key"));
+    REQUIRE(1000 == t.get("third key"));
 }
 
 TEST_CASE("Tree can update existing nodes", "[Tree]")
 {
     Tree<int> t = Tree<int>();
-    Node<int> *n;
 
     t.insert("test key", 9001);
     t.insert("test key", 9002);
 
-    n = t.search("test key");
-
-    REQUIRE(9002 == n->get_value());
+    REQUIRE(9002 == t.get("test key"));
 }
 
 TEST_CASE("Trinode restructure case 0", "[Tree]")
@@ -235,9 +226,9 @@ TEST_CASE("Trinode restructure case 3", "[Tree]")
 TEST_CASE("Can insert and find elements", "[Tree]")
 {
     Tree<int> t = Tree<int>();
-    Node<int> *n;
 
     int i;
+    int value;
     string i_str;
 
     for(i = 0; i < 10000; i++) {
@@ -246,8 +237,21 @@ TEST_CASE("Can insert and find elements", "[Tree]")
     }
 
     for(i = 0; i < 10000; i++) {
-        n = t.search(std::to_string(i));
-        REQUIRE(n != NULL);
-        REQUIRE(i == n->get_value());
+        value = t.get(std::to_string(i));
+        REQUIRE(i == value);
     }
+}
+
+TEST_CASE("Behaves reasonably when int Nodes are not found", "[Tree]")
+{
+    Tree<int> int_tree = Tree<int>();
+    int_tree.insert("key", 123);
+    REQUIRE(int_tree.get("fake key") == 0);
+}
+
+TEST_CASE("Behaves reasonably when double Nodes are not found", "[Tree]")
+{
+    Tree<double> double_tree = Tree<double>();
+    double_tree.insert("key", 1.1);
+    REQUIRE(double_tree.get("fake key") == 0.0);
 }

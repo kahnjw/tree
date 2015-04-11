@@ -65,7 +65,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
             j_str = to_string(j);
             t->insert(j_str, j);
             start = clock();
-            t->search(j_str);
+            t->get(j_str);
             end = clock();
 
             sum += (end - start);

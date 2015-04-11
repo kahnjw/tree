@@ -7,7 +7,7 @@ tree_unit_test:
 stress_test:
 	g++ -Wall -Wextra -std=c++11 -o test/bin/stress_test test/stress_test.cpp
 
-testall:	clean node_unit_test tree_unit_test stress_test
+testall: clean node_unit_test tree_unit_test stress_test
 
 clean:
 	rm -f test/bin/stress_test test/bin/tree_unit test/bin/node_unit

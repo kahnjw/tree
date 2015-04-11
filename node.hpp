@@ -175,13 +175,13 @@ bool Node::is_left()
         return false;
     }
 
-    /* If the key of the parent's left child
-     * equals the key of the node in question
+    /* If the address of the parent's left child
+     * equals the address of the node in question
      * then the node in question is the left
      * child, and the sibling is the right
      * child.
      */
-    if(left->get_key() == get_key()) {
+    if(left == this) {
         return true;
     }
 

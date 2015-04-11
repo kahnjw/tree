@@ -203,9 +203,9 @@ void Tree::insert(int key, int value, Node *leaf)
 {
     Node * new_node;
 
-    if(key < leaf->get_key()) {
+    if (key < leaf->get_key()) {
 
-        if(leaf->get_left() != NULL) {
+        if (leaf->get_left() != NULL) {
             return insert(key, value, leaf->get_left());
         } else {
             new_node = new Node();
@@ -218,9 +218,9 @@ void Tree::insert(int key, int value, Node *leaf)
             }
         }
 
-    } else if(key > leaf->get_key()) {
+    } else if (key > leaf->get_key()) {
 
-        if(leaf->get_right() != NULL) {
+        if (leaf->get_right() != NULL) {
             return insert(key, value, leaf->get_right());
         } else {
             new_node = new Node();
@@ -228,12 +228,12 @@ void Tree::insert(int key, int value, Node *leaf)
             new_node->set_value(value);
             leaf->set_right(new_node);
 
-            if(leaf->is_red()) {
+            if (leaf->is_red()) {
                 return doubleRed(new_node);
             }
         }
 
-    } else if(key == leaf->get_key()) {
+    } else if (key == leaf->get_key()) {
         return leaf->set_value(value);
     }
 }
@@ -249,15 +249,14 @@ void Tree::insert(int key, int value, Node *leaf)
 Node *Tree::search(int key, Node *leaf)
 {
 
-    if(leaf != NULL) {
-        if(key == leaf->get_key()) {
+    if (leaf != NULL) {
+        if (key == leaf->get_key()) {
             return leaf;
         } else if (key < leaf->get_key()) {
             return search(key, leaf->get_left());
         }
 
         return search(key, leaf->get_right());
-
     }
 
     return NULL;
@@ -267,7 +266,7 @@ void Tree::insert(string key, int value)
 {
     int hash_key = string_to_hash(key);
 
-    if(root != NULL) {
+    if (root != NULL) {
         insert(hash_key, value, root);
     } else {
         root = new Node();

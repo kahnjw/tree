@@ -4,7 +4,7 @@ A Red Black Tree Implemented in C++
 
 ## Run the tests
 
-Validate input and output:
+Validate output:
 
 ```
 $ scripts/test.sh

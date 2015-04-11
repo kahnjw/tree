@@ -1,3 +1,2 @@
-# Red Black Tree
-
-A Red Black tree implemented in C++.
+# Tree
+A Red Black Tree Implemented in C++

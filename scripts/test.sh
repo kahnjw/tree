@@ -13,3 +13,5 @@ test/bin/tree_unit
 echo "Executing stress tests, this could take a while..."
 
 test/bin/stress_test
+
+make clean

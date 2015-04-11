@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 #include "lib/catch/catch.hpp"
 #include "../tree.hpp"
 
@@ -240,12 +241,12 @@ TEST_CASE("Can insert and find elements", "[Tree]")
     string i_str;
 
     for(i = 0; i < 1000; i++) {
-        i_str = to_string(i);
+        i_str = std::to_string(i);
         t.insert(i_str, i);
     }
 
     for(i = 0; i < 1000; i++) {
-        n = t.search(to_string(i));
+        n = t.search(std::to_string(i));
         REQUIRE(n != NULL);
         REQUIRE(i == n->get_value());
     }

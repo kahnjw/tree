@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <string>
+#include <tr1/functional>
 #include "node.hpp"
 
 using namespace std;
@@ -53,7 +55,7 @@ bool Tree::is_root(Node * node)
 int Tree::string_to_hash(string key)
 {
     /* TODO: Use a more robust hashing algorithm */
-    hash<string> str_hash;
+    tr1::hash<string> str_hash;
 
     return str_hash(key);
 }

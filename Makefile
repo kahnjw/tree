@@ -11,3 +11,6 @@ testall:	clean node_unit_test tree_unit_test stress_test
 
 clean:
 	rm -f test/bin/stress_test test/bin/tree_unit test/bin/node_unit
+
+memtest:
+	g++ -std=c++11 -g -O0 -o test/bin/memtest test/tree_unit.cpp

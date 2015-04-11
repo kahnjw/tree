@@ -90,11 +90,17 @@ Node * Node::get_parent()
 void Node::set_left(Node * _left)
 {
     left = _left;
+
+    if(_left != NULL)
+        _left->set_parent(this);
 }
 
 void Node::set_right(Node * _right)
 {
     right = _right;
+
+    if(_right != NULL)
+        _right->set_parent(this);
 }
 
 bool Node::is_red()

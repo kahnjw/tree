@@ -38,7 +38,7 @@ TEST_CASE("Tree can update existing nodes", "[Tree]")
     REQUIRE(9002 == n->get_value());
 }
 
-TEST_CASE("Trinode restructure", "[Tree]")
+TEST_CASE("Trinode restructure case 0", "[Tree]")
 {
     Tree t = Tree();
 
@@ -49,9 +49,15 @@ TEST_CASE("Trinode restructure", "[Tree]")
     Node * brother = new Node();
     Node * great_grandparent = new Node();
 
+    grandparent->set_key(0);
+    parent->set_key(1);
+    child->set_key(2);
+    uncle->set_key(3);
+    brother->set_key(4);
+    great_grandparent->set_key(5);
+
     grandparent->set_left(parent);
     grandparent->set_right(uncle);
-    grandparent->set_parent(great_grandparent);
     grandparent->set_black();
 
     great_grandparent->set_left(grandparent);
@@ -59,13 +65,10 @@ TEST_CASE("Trinode restructure", "[Tree]")
 
     parent->set_left(child);
     parent->set_right(brother);
-    parent->set_parent(grandparent);
     parent->set_red();
 
-    child->set_parent(parent);
     child->set_red();
 
-    uncle->set_parent(grandparent);
     uncle->set_black();
 
     t.set_root(great_grandparent);
@@ -74,15 +77,161 @@ TEST_CASE("Trinode restructure", "[Tree]")
     REQUIRE(child->is_red());
     REQUIRE(parent->is_black());
     REQUIRE(parent->get_left() == child);
+    REQUIRE(parent->get_parent() == great_grandparent);
     REQUIRE(child->get_parent() == parent);
     REQUIRE(grandparent->get_parent() == parent);
     REQUIRE(parent->get_right() == grandparent);
     REQUIRE(grandparent->get_left() == brother);
     REQUIRE(brother->get_parent() == grandparent);
     REQUIRE(grandparent->is_red());
+    REQUIRE(great_grandparent->get_left() == parent);
 }
 
-TEST_CASE("Stress test", "[Tree]")
+TEST_CASE("Trinode restructure case 1", "[Tree]")
+{
+    Tree t = Tree();
+
+    Node * grandparent = new Node();
+    Node * parent = new Node();
+    Node * child = new Node();
+    Node * uncle = new Node();
+    Node * brother = new Node();
+    Node * great_grandparent = new Node();
+
+    grandparent->set_key(0);
+    parent->set_key(1);
+    child->set_key(2);
+    uncle->set_key(3);
+    brother->set_key(4);
+    great_grandparent->set_key(5);
+
+    grandparent->set_left(parent);
+    grandparent->set_right(uncle);
+    grandparent->set_black();
+
+    great_grandparent->set_left(grandparent);
+    great_grandparent->set_black();
+
+    parent->set_right(child);
+    parent->set_left(brother);
+    parent->set_red();
+
+    child->set_red();
+    uncle->set_black();
+
+    t.set_root(great_grandparent);
+    t.trinode_restructure(child);
+
+
+    REQUIRE(child->is_black());
+    REQUIRE(parent->is_red());
+    REQUIRE(parent->get_left() == brother);
+    REQUIRE(child->get_parent() == great_grandparent);
+    REQUIRE(grandparent->get_parent() == child);
+    REQUIRE(parent->get_parent() == child);
+    REQUIRE(child->get_left() == parent);
+    REQUIRE(child->get_right() == grandparent);
+    REQUIRE(grandparent->is_red());
+    REQUIRE(great_grandparent->get_left() == child);
+}
+
+TEST_CASE("Trinode restructure case 2", "[Tree]")
+{
+    Tree t = Tree();
+
+    Node * grandparent = new Node();
+    Node * parent = new Node();
+    Node * child = new Node();
+    Node * uncle = new Node();
+    Node * brother = new Node();
+    Node * great_grandparent = new Node();
+
+    grandparent->set_key(0);
+    parent->set_key(1);
+    child->set_key(2);
+    uncle->set_key(3);
+    brother->set_key(4);
+    great_grandparent->set_key(5);
+
+    grandparent->set_right(parent);
+    grandparent->set_left(uncle);
+    grandparent->set_black();
+
+    great_grandparent->set_right(grandparent);
+    great_grandparent->set_black();
+
+    parent->set_right(child);
+    parent->set_left(brother);
+    parent->set_red();
+
+    child->set_red();
+    uncle->set_black();
+
+    t.set_root(great_grandparent);
+    t.trinode_restructure(child);
+
+    REQUIRE(child->is_red());
+    REQUIRE(parent->is_black());
+    REQUIRE(parent->get_right() == child);
+    REQUIRE(child->get_parent() == parent);
+    REQUIRE(grandparent->get_parent() == parent);
+    REQUIRE(parent->get_left() == grandparent);
+    REQUIRE(grandparent->get_right() == brother);
+    REQUIRE(brother->get_parent() == grandparent);
+    REQUIRE(grandparent->is_red());
+    REQUIRE(parent->get_parent() == great_grandparent);
+    REQUIRE(great_grandparent->get_right() == parent);
+}
+
+TEST_CASE("Trinode restructure case 3", "[Tree]")
+{
+    Tree t = Tree();
+
+    Node * grandparent = new Node();
+    Node * parent = new Node();
+    Node * child = new Node();
+    Node * uncle = new Node();
+    Node * brother = new Node();
+    Node * great_grandparent = new Node();
+
+    grandparent->set_key(0);
+    parent->set_key(1);
+    child->set_key(2);
+    uncle->set_key(3);
+    brother->set_key(4);
+    great_grandparent->set_key(5);
+
+    grandparent->set_right(parent);
+    grandparent->set_left(uncle);
+    grandparent->set_black();
+
+    great_grandparent->set_right(grandparent);
+    great_grandparent->set_black();
+
+    parent->set_left(child);
+    parent->set_right(brother);
+    parent->set_red();
+
+    child->set_red();
+    uncle->set_black();
+
+    t.set_root(great_grandparent);
+    t.trinode_restructure(child);
+
+
+    REQUIRE(child->is_black());
+    REQUIRE(parent->is_red());
+    REQUIRE(parent->get_right() == brother);
+    REQUIRE(child->get_parent() == great_grandparent);
+    REQUIRE(grandparent->get_parent() == child);
+    REQUIRE(parent->get_parent() == child);
+    REQUIRE(child->get_right() == parent);
+    REQUIRE(child->get_left() == grandparent);
+    REQUIRE(grandparent->is_red());
+    REQUIRE(great_grandparent->get_right() == child);
+}
+
+TEST_CASE("Can insert and find elements", "[Tree]")
 {
     Tree t = Tree();
     Node *n;

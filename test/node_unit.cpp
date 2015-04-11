@@ -7,8 +7,8 @@
 
 TEST_CASE("Node can get parent", "[Node]")
 {
-    Node * child = new Node();
-    Node * parent = new Node();
+    Node<int> * child = new Node<int>();
+    Node<int> * parent = new Node<int>();
 
     child->set_parent(parent);
 
@@ -17,8 +17,8 @@ TEST_CASE("Node can get parent", "[Node]")
 
 TEST_CASE("Node can get left child", "[Node]")
 {
-    Node * parent = new Node();
-    Node * left = new Node();
+    Node<int> * parent = new Node<int>();
+    Node<int> * left = new Node<int>();
 
     parent->set_left(left);
 
@@ -27,8 +27,8 @@ TEST_CASE("Node can get left child", "[Node]")
 
 TEST_CASE("Node can get right child", "[Node]")
 {
-    Node * parent = new Node();
-    Node * right = new Node();
+    Node<int> * parent = new Node<int>();
+    Node<int> * right = new Node<int>();
 
     parent->set_right(right);
 
@@ -37,9 +37,9 @@ TEST_CASE("Node can get right child", "[Node]")
 
 TEST_CASE("Node can get right sibling", "[Node]")
 {
-    Node * parent = new Node();
-    Node * right = new Node();
-    Node * left = new Node();
+    Node<int> * parent = new Node<int>();
+    Node<int> * right = new Node<int>();
+    Node<int> * left = new Node<int>();
 
     parent->set_right(right);
     parent->set_left(left);
@@ -59,9 +59,9 @@ TEST_CASE("Node can get right sibling", "[Node]")
 
 TEST_CASE("Node can get left sibling", "[Node]")
 {
-    Node * parent = new Node();
-    Node * right = new Node();
-    Node * left = new Node();
+    Node<int> * parent = new Node<int>();
+    Node<int> * right = new Node<int>();
+    Node<int> * left = new Node<int>();
 
     /* Node's must have unique keys to be
      * uniquely identifyable
@@ -81,9 +81,9 @@ TEST_CASE("Node can get left sibling", "[Node]")
 
 TEST_CASE("Node can get left NULL sibling", "[Node]")
 {
-    Node * parent = new Node();
-    Node * right = new Node();
-    Node * left = NULL;
+    Node<int> * parent = new Node<int>();
+    Node<int> * right = new Node<int>();
+    Node<int> * left = NULL;
 
     /* Node's must have unique keys to be
      * uniquely identifyable
@@ -101,9 +101,9 @@ TEST_CASE("Node can get left NULL sibling", "[Node]")
 
 TEST_CASE("Node can get right NULL sibling", "[Node]")
 {
-    Node * parent = new Node();
-    Node * left = new Node();
-    Node * right = NULL;
+    Node<int> * parent = new Node<int>();
+    Node<int> * left = new Node<int>();
+    Node<int> * right = NULL;
 
     /* Node's must have unique keys to be
      * uniquely identifyable
@@ -121,9 +121,9 @@ TEST_CASE("Node can get right NULL sibling", "[Node]")
 
 TEST_CASE("Node can determine if it is on the right", "[Node]")
 {
-    Node * parent = new Node();
-    Node * right = new Node();
-    Node * left = new Node();
+    Node<int> * parent = new Node<int>();
+    Node<int> * right = new Node<int>();
+    Node<int> * left = new Node<int>();
 
     /* Node's must have unique keys to be
      * uniquely identifyable
@@ -143,9 +143,9 @@ TEST_CASE("Node can determine if it is on the right", "[Node]")
 
 TEST_CASE("Node can determine if it is on the left", "[Node]")
 {
-    Node * parent = new Node();
-    Node * right = new Node();
-    Node * left = new Node();
+    Node<int> * parent = new Node<int>();
+    Node<int> * right = new Node<int>();
+    Node<int> * left = new Node<int>();
 
     /* Node's must have unique keys to be
      * uniquely identifyable

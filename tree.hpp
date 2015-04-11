@@ -6,52 +6,55 @@
 
 using namespace std;
 
-
+template <class ObjectType>
 class Tree
 {
     public:
         Tree();
         ~Tree();
 
-        void insert(string key, int value);
-        Node *search(string key);
-        void print();
-        void trinode_restructure(Node * child);
-        void recolor(Node * child);
-        void set_root(Node * _node);
+        void insert(string key, ObjectType value);
+        Node<ObjectType> *search(string key);
+        void trinode_restructure(Node<ObjectType> * child);
+        void recolor(Node<ObjectType> * child);
+        void set_root(Node<ObjectType> * _node);
         int string_to_hash(string key);
 
     private:
-        bool is_root(Node * node);
-        void insert(int key, int value, Node *leaf);
-        void print(Node * root);
-        void doubleRed(Node * child);
-        Node *search(int key, Node *leaf);
+        bool is_root(Node<ObjectType> * node);
+        void insert(int key, ObjectType value, Node<ObjectType> *leaf);
+        void doubleRed(Node<ObjectType> * child);
+        Node<ObjectType> *search(int key, Node<ObjectType> *leaf);
 
-        Node *root;
+        Node<ObjectType> *root;
 };
 
-Tree::Tree()
+template <class ObjectType>
+Tree<ObjectType>::Tree()
 {
     root = NULL;
 }
 
-Tree::~Tree()
+template <class ObjectType>
+Tree<ObjectType>::~Tree()
 {
     delete root;
 }
 
-void Tree::set_root(Node * _node)
+template <class ObjectType>
+void Tree<ObjectType>::set_root(Node<ObjectType> * _node)
 {
     root = _node;
 }
 
-bool Tree::is_root(Node * node)
+template <class ObjectType>
+bool Tree<ObjectType>::is_root(Node<ObjectType> * node)
 {
     return node == root;
 }
 
-int Tree::string_to_hash(string key)
+template <class ObjectType>
+int Tree<ObjectType>::string_to_hash(string key)
 {
     /* TODO: Use a more robust hashing algorithm */
     hash<string> str_hash;
@@ -59,13 +62,14 @@ int Tree::string_to_hash(string key)
     return str_hash(key);
 }
 
-void Tree::trinode_restructure(Node * child)
+template <class ObjectType>
+void Tree<ObjectType>::trinode_restructure(Node<ObjectType> * child)
 {
     bool grandparent_is_left;
-    Node * parent;
-    Node * grandparent;
-    Node * great_grandparent;
-    Node * brother;
+    Node<ObjectType> * parent;
+    Node<ObjectType> * grandparent;
+    Node<ObjectType> * great_grandparent;
+    Node<ObjectType> * brother;
 
     brother = child->get_sibling();
     parent = child->get_parent();
@@ -152,12 +156,13 @@ void Tree::trinode_restructure(Node * child)
     }
 }
 
-void Tree::doubleRed(Node * child)
+template <class ObjectType>
+void Tree<ObjectType>::doubleRed(Node<ObjectType> * child)
 {
-    Node * parent;
-    Node * grandparent;
-    Node * great_grandparent;
-    Node * uncle;
+    Node<ObjectType> * parent;
+    Node<ObjectType> * grandparent;
+    Node<ObjectType> * great_grandparent;
+    Node<ObjectType> * uncle;
 
     parent = child->get_parent();
 
@@ -200,16 +205,17 @@ void Tree::doubleRed(Node * child)
  * O(N). On average it will be O(log(N)) assuming the
  * tree is reasonably balanced.
  */
-void Tree::insert(int key, int value, Node *leaf)
+template <class ObjectType>
+void Tree<ObjectType>::insert(int key, ObjectType value, Node<ObjectType> *leaf)
 {
-    Node * new_node;
+    Node<ObjectType> * new_node;
 
     if (key < leaf->get_key()) {
 
         if (leaf->get_left() != NULL) {
             return insert(key, value, leaf->get_left());
         } else {
-            new_node = new Node();
+            new_node = new Node<ObjectType>();
             new_node->set_key(key);
             new_node->set_value(value);
             leaf->set_left(new_node);
@@ -224,7 +230,7 @@ void Tree::insert(int key, int value, Node *leaf)
         if (leaf->get_right() != NULL) {
             return insert(key, value, leaf->get_right());
         } else {
-            new_node = new Node();
+            new_node = new Node<ObjectType>();
             new_node->set_key(key);
             new_node->set_value(value);
             leaf->set_right(new_node);
@@ -247,7 +253,8 @@ void Tree::insert(int key, int value, Node *leaf)
  * O(N). On average it will be O(log(N)) assuming the
  * tree is reasonably balanced.
  */
-Node *Tree::search(int key, Node *leaf)
+template <class ObjectType>
+Node<ObjectType> *Tree<ObjectType>::search(int key, Node<ObjectType> *leaf)
 {
 
     if (leaf != NULL) {
@@ -263,67 +270,24 @@ Node *Tree::search(int key, Node *leaf)
     return NULL;
 }
 
-void Tree::insert(string key, int value)
+template <class ObjectType>
+void Tree<ObjectType>::insert(string key, ObjectType value)
 {
     int hash_key = string_to_hash(key);
 
     if (root != NULL) {
         insert(hash_key, value, root);
     } else {
-        root = new Node();
+        root = new Node<ObjectType>();
         root->set_value(value);
         root->set_key(hash_key);
         root->set_black();
     }
 }
 
-Node *Tree::search(string key)
+template <class ObjectType>
+Node<ObjectType> *Tree<ObjectType>::search(string key)
 {
     int hash_key = string_to_hash(key);
     return search(hash_key, root);
-}
-
-void Tree::print(Node *root)
-{
-    vector<Node *> level;
-    vector<Node *> next_level;
-    int i;
-
-    level.push_back(root);
-
-    while(level.size() > 0) {
-        for(i = 0; i < level.size(); i++) {
-            if(level[i] != NULL)
-                printf("%13d %d", level[i]->get_key(), level[i]->is_red());
-            else
-                printf("%15s", "NULL");
-
-
-            if(level[i] != NULL && level[i]->get_left() != NULL) {
-                next_level.push_back(level[i]->get_left());
-            } else if (level[i] != NULL) {
-                next_level.push_back(NULL);
-            }
-
-            if(level[i] != NULL && level[i]->get_right() != NULL) {
-                next_level.push_back(level[i]->get_right());
-            } else if (level[i] != NULL) {
-                next_level.push_back(NULL);
-            }
-        }
-        printf("\n");
-        level.clear();
-        level.swap(next_level);
-        next_level.clear();
-    }
-}
-
-void Tree::print()
-{
-    printf("\n");
-    printf("===============================================================");
-    printf("===============================================================\n");
-    print(root);
-    printf("===============================================================");
-    printf("===============================================================\n");
 }

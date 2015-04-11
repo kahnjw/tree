@@ -3,22 +3,23 @@
 
 using namespace std;
 
+template <class ObjectType>
 class Node
 {
     public:
         Node();
         ~Node();
 
-        int get_value();
-        void set_value(int value);
+        ObjectType get_value();
+        void set_value(ObjectType value);
         int get_key();
         void set_key(int key);
-        Node * get_left();
-        Node * get_right();
-        Node * get_parent();
-        Node * get_sibling();
-        void set_left(Node * left);
-        void set_right(Node * right);
+        Node<ObjectType> * get_left();
+        Node<ObjectType> * get_right();
+        Node<ObjectType> * get_parent();
+        Node<ObjectType> * get_sibling();
+        void set_left(Node<ObjectType> * left);
+        void set_right(Node<ObjectType> * right);
         bool is_red();
         bool is_black();
         bool is_left();
@@ -28,15 +29,16 @@ class Node
         void set_parent(Node * parent);
 
     private:
-        Node * left;
-        Node * right;
-        Node * parent;
+        Node<ObjectType> * left;
+        Node<ObjectType> * right;
+        Node<ObjectType> * parent;
         int key;
-        int value;
+        ObjectType value;
         bool red;
 };
 
-Node::Node()
+template <class ObjectType>
+Node<ObjectType>::Node()
 {
     left = NULL;
     right = NULL;
@@ -46,48 +48,57 @@ Node::Node()
     parent = NULL;
 }
 
-Node::~Node()
+template <class ObjectType>
+Node<ObjectType>::~Node()
 {
     delete left;
     delete right;
 }
 
-int Node::get_value()
+template <class ObjectType>
+ObjectType Node<ObjectType>::get_value()
 {
     return value;
 }
 
-void Node::set_value(int _value)
+template <class ObjectType>
+void Node<ObjectType>::set_value(ObjectType _value)
 {
     value = _value;
 }
 
-int Node::get_key()
+template <class ObjectType>
+int Node<ObjectType>::get_key()
 {
     return key;
 }
 
-void Node::set_key(int _key)
+template <class ObjectType>
+void Node<ObjectType>::set_key(int _key)
 {
     key = _key;
 }
 
-Node * Node::get_left()
+template <class ObjectType>
+Node<ObjectType> * Node<ObjectType>::get_left()
 {
     return left;
 }
 
-Node * Node::get_right()
+template <class ObjectType>
+Node<ObjectType> * Node<ObjectType>::get_right()
 {
     return right;
 }
 
-Node * Node::get_parent()
+template <class ObjectType>
+Node<ObjectType> * Node<ObjectType>::get_parent()
 {
     return parent;
 }
 
-void Node::set_left(Node * _left)
+template <class ObjectType>
+void Node<ObjectType>::set_left(Node * _left)
 {
     left = _left;
 
@@ -95,7 +106,8 @@ void Node::set_left(Node * _left)
         _left->set_parent(this);
 }
 
-void Node::set_right(Node * _right)
+template <class ObjectType>
+void Node<ObjectType>::set_right(Node * _right)
 {
     right = _right;
 
@@ -103,34 +115,40 @@ void Node::set_right(Node * _right)
         _right->set_parent(this);
 }
 
-bool Node::is_red()
+template <class ObjectType>
+bool Node<ObjectType>::is_red()
 {
     return red;
 }
 
-bool Node::is_black()
+template <class ObjectType>
+bool Node<ObjectType>::is_black()
 {
     return !red;
 }
 
-void Node::set_red()
+template <class ObjectType>
+void Node<ObjectType>::set_red()
 {
     red = true;
 }
 
-void Node::set_black()
+template <class ObjectType>
+void Node<ObjectType>::set_black()
 {
     red = false;
 }
 
-void Node::set_parent(Node * _parent)
+template <class ObjectType>
+void Node<ObjectType>::set_parent(Node<ObjectType> * _parent)
 {
     parent = _parent;
 }
 
-Node * Node::get_sibling()
+template <class ObjectType>
+Node<ObjectType> * Node<ObjectType>::get_sibling()
 {
-    Node * parent;
+    Node<ObjectType> * parent;
     bool is_left_child;
 
     parent = get_parent();
@@ -151,10 +169,11 @@ Node * Node::get_sibling()
     return parent->get_left();
 }
 
-bool Node::is_left()
+template <class ObjectType>
+bool Node<ObjectType>::is_left()
 {
-    Node * parent;
-    Node * left;
+    Node<ObjectType> * parent;
+    Node<ObjectType> * left;
 
     parent = get_parent();
 
@@ -192,7 +211,8 @@ bool Node::is_left()
     return false;
 }
 
-bool Node::is_right()
+template <class ObjectType>
+bool Node<ObjectType>::is_right()
 {
     return !is_left();
 }

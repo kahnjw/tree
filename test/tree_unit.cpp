@@ -8,10 +8,10 @@
 
 TEST_CASE("Tree can get and set nodes", "[Tree]")
 {
-    Tree t = Tree();
-    Node *n1;
-    Node *n2;
-    Node *n3;
+    Tree<int> t = Tree<int>();
+    Node<int> *n1;
+    Node<int> *n2;
+    Node<int> *n3;
 
     t.insert("first key", 1);
     t.insert("second key", -10);
@@ -28,8 +28,8 @@ TEST_CASE("Tree can get and set nodes", "[Tree]")
 
 TEST_CASE("Tree can update existing nodes", "[Tree]")
 {
-    Tree t = Tree();
-    Node *n;
+    Tree<int> t = Tree<int>();
+    Node<int> *n;
 
     t.insert("test key", 9001);
     t.insert("test key", 9002);
@@ -41,14 +41,14 @@ TEST_CASE("Tree can update existing nodes", "[Tree]")
 
 TEST_CASE("Trinode restructure case 0", "[Tree]")
 {
-    Tree t = Tree();
+    Tree<int> t = Tree<int>();
 
-    Node * grandparent = new Node();
-    Node * parent = new Node();
-    Node * child = new Node();
-    Node * uncle = new Node();
-    Node * brother = new Node();
-    Node * great_grandparent = new Node();
+    Node<int> * grandparent = new Node<int>();
+    Node<int> * parent = new Node<int>();
+    Node<int> * child = new Node<int>();
+    Node<int> * uncle = new Node<int>();
+    Node<int> * brother = new Node<int>();
+    Node<int> * great_grandparent = new Node<int>();
 
     grandparent->set_key(0);
     parent->set_key(1);
@@ -90,14 +90,14 @@ TEST_CASE("Trinode restructure case 0", "[Tree]")
 
 TEST_CASE("Trinode restructure case 1", "[Tree]")
 {
-    Tree t = Tree();
+    Tree<int> t = Tree<int>();
 
-    Node * grandparent = new Node();
-    Node * parent = new Node();
-    Node * child = new Node();
-    Node * uncle = new Node();
-    Node * brother = new Node();
-    Node * great_grandparent = new Node();
+    Node<int> * grandparent = new Node<int>();
+    Node<int> * parent = new Node<int>();
+    Node<int> * child = new Node<int>();
+    Node<int> * uncle = new Node<int>();
+    Node<int> * brother = new Node<int>();
+    Node<int> * great_grandparent = new Node<int>();
 
     grandparent->set_key(0);
     parent->set_key(1);
@@ -138,14 +138,14 @@ TEST_CASE("Trinode restructure case 1", "[Tree]")
 
 TEST_CASE("Trinode restructure case 2", "[Tree]")
 {
-    Tree t = Tree();
+    Tree<int> t = Tree<int>();
 
-    Node * grandparent = new Node();
-    Node * parent = new Node();
-    Node * child = new Node();
-    Node * uncle = new Node();
-    Node * brother = new Node();
-    Node * great_grandparent = new Node();
+    Node<int> * grandparent = new Node<int>();
+    Node<int> * parent = new Node<int>();
+    Node<int> * child = new Node<int>();
+    Node<int> * uncle = new Node<int>();
+    Node<int> * brother = new Node<int>();
+    Node<int> * great_grandparent = new Node<int>();
 
     grandparent->set_key(0);
     parent->set_key(1);
@@ -186,14 +186,14 @@ TEST_CASE("Trinode restructure case 2", "[Tree]")
 
 TEST_CASE("Trinode restructure case 3", "[Tree]")
 {
-    Tree t = Tree();
+    Tree<int> t = Tree<int>();
 
-    Node * grandparent = new Node();
-    Node * parent = new Node();
-    Node * child = new Node();
-    Node * uncle = new Node();
-    Node * brother = new Node();
-    Node * great_grandparent = new Node();
+    Node<int> * grandparent = new Node<int>();
+    Node<int> * parent = new Node<int>();
+    Node<int> * child = new Node<int>();
+    Node<int> * uncle = new Node<int>();
+    Node<int> * brother = new Node<int>();
+    Node<int> * great_grandparent = new Node<int>();
 
     grandparent->set_key(0);
     parent->set_key(1);
@@ -234,8 +234,8 @@ TEST_CASE("Trinode restructure case 3", "[Tree]")
 
 TEST_CASE("Can insert and find elements", "[Tree]")
 {
-    Tree t = Tree();
-    Node *n;
+    Tree<int> t = Tree<int>();
+    Node<int> *n;
 
     int i;
     string i_str;

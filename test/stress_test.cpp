@@ -10,9 +10,9 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
 {
     clock_t start, end;
     double sum, average;
-    int i, j, interval;
+    long i, j, interval;
     string j_str;
-    Tree<int> * t;
+    Tree<long> * t;
     vector<double> insertion_time;
 
 
@@ -21,7 +21,7 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
         sum = 0;
         average = 0;
 
-        t = new Tree<int>();
+        t = new Tree<long>();
 
         for(j = 0; j < interval; j++) {
             j_str = to_string(j);
@@ -39,7 +39,7 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
 
     printf("-----------------------------------------\n");
     for(i = 0; i < insertion_time.size(); i++) {
-        printf("average insertion time: %8f level: %d\n", insertion_time[i], i);
+        printf("average insertion time: %8f level: %lu\n", insertion_time[i], i);
     }
     printf("-----------------------------------------\n");
 }
@@ -48,9 +48,9 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
 {
     clock_t start, end;
     double sum, average;
-    int i, j, interval;
+    long i, j, interval;
     string j_str;
-    Tree<int> * t;
+    Tree<long> * t;
     vector<double> insertion_time;
 
 
@@ -59,7 +59,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
         sum = 0;
         average = 0;
 
-        t = new Tree<int>();
+        t = new Tree<long>();
 
         for(j = 0; j < interval; j++) {
             j_str = to_string(j);
@@ -78,7 +78,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
 
     printf("------------------------------------------------\n");
     for(i = 0; i < insertion_time.size(); i++) {
-        printf("average lookup time: %8f level: %d n: %d\n",
+        printf("average lookup time: %8f level: %lu n: %lu\n",
             insertion_time[i], i, i * 100000);
     }
     printf("------------------------------------------------\n");

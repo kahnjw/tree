@@ -12,7 +12,7 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
     double sum, average;
     int i, j, interval;
     string j_str;
-    Tree * t;
+    Tree<int> * t;
     vector<double> insertion_time;
 
 
@@ -21,7 +21,7 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
         sum = 0;
         average = 0;
 
-        t = new Tree();
+        t = new Tree<int>();
 
         for(j = 0; j < interval; j++) {
             j_str = to_string(j);
@@ -50,7 +50,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
     double sum, average;
     int i, j, interval;
     string j_str;
-    Tree * t;
+    Tree<int> * t;
     vector<double> insertion_time;
 
 
@@ -59,7 +59,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
         sum = 0;
         average = 0;
 
-        t = new Tree();
+        t = new Tree<int>();
 
         for(j = 0; j < interval; j++) {
             j_str = to_string(j);

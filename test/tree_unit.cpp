@@ -239,12 +239,12 @@ TEST_CASE("Can insert and find elements", "[Tree]")
     int i;
     string i_str;
 
-    for(i = 0; i < 10; i++) {
+    for(i = 0; i < 100000; i++) {
         i_str = to_string(i);
         t.insert(i_str, i);
     }
 
-    for(i = 0; i < 10; i++) {
+    for(i = 0; i < 100000; i++) {
         n = t.search(to_string(i));
         REQUIRE(n != NULL);
         REQUIRE(i == n->get_value());

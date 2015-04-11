@@ -18,15 +18,15 @@ class Tree
         void trinode_restructure(Node<ObjectType> * child);
         void recolor(Node<ObjectType> * child);
         void set_root(Node<ObjectType> * _node);
-        int string_to_hash(string key);
+        const long sdbm(const char * str);
 
     private:
         bool is_root(Node<ObjectType> * node);
-        void insert(int key, ObjectType value, Node<ObjectType> *leaf);
+        void insert(long key, ObjectType value, Node<ObjectType> *leaf);
         void doubleRed(Node<ObjectType> * child);
-        Node<ObjectType> *search(int key, Node<ObjectType> *leaf);
+        Node<ObjectType> * search(long key, Node<ObjectType> *leaf);
 
-        Node<ObjectType> *root;
+        Node<ObjectType> * root;
 };
 
 template <class ObjectType>
@@ -54,12 +54,18 @@ bool Tree<ObjectType>::is_root(Node<ObjectType> * node)
 }
 
 template <class ObjectType>
-int Tree<ObjectType>::string_to_hash(string key)
+const long Tree<ObjectType>::sdbm (const char * str)
 {
-    /* TODO: Use a more robust hashing algorithm */
-    hash<string> str_hash;
+    long hash = 0;
+    int c;
 
-    return str_hash(key);
+    /* Move through the char * bit by bit, scramble hash
+     * and add it to the accumulated hash value.
+     */
+    while ((c = *str++))
+        hash = c + (hash << 6) + (hash << 16) - hash;
+
+    return hash;
 }
 
 template <class ObjectType>
@@ -206,7 +212,7 @@ void Tree<ObjectType>::doubleRed(Node<ObjectType> * child)
  * tree is reasonably balanced.
  */
 template <class ObjectType>
-void Tree<ObjectType>::insert(int key, ObjectType value, Node<ObjectType> *leaf)
+void Tree<ObjectType>::insert(long key, ObjectType value, Node<ObjectType> *leaf)
 {
     Node<ObjectType> * new_node;
 
@@ -254,7 +260,7 @@ void Tree<ObjectType>::insert(int key, ObjectType value, Node<ObjectType> *leaf)
  * tree is reasonably balanced.
  */
 template <class ObjectType>
-Node<ObjectType> *Tree<ObjectType>::search(int key, Node<ObjectType> *leaf)
+Node<ObjectType> *Tree<ObjectType>::search(long key, Node<ObjectType> *leaf)
 {
 
     if (leaf != NULL) {
@@ -273,7 +279,7 @@ Node<ObjectType> *Tree<ObjectType>::search(int key, Node<ObjectType> *leaf)
 template <class ObjectType>
 void Tree<ObjectType>::insert(string key, ObjectType value)
 {
-    int hash_key = string_to_hash(key);
+    const long hash_key = sdbm(key.c_str());
 
     if (root != NULL) {
         insert(hash_key, value, root);
@@ -288,6 +294,8 @@ void Tree<ObjectType>::insert(string key, ObjectType value)
 template <class ObjectType>
 Node<ObjectType> *Tree<ObjectType>::search(string key)
 {
-    int hash_key = string_to_hash(key);
+    const long hash_key = sdbm(key.c_str());
     return search(hash_key, root);
+
+
 }

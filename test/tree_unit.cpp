@@ -240,12 +240,12 @@ TEST_CASE("Can insert and find elements", "[Tree]")
     int i;
     string i_str;
 
-    for(i = 0; i < 1000; i++) {
+    for(i = 0; i < 10000; i++) {
         i_str = std::to_string(i);
         t.insert(i_str, i);
     }
 
-    for(i = 0; i < 1000; i++) {
+    for(i = 0; i < 10000; i++) {
         n = t.search(std::to_string(i));
         REQUIRE(n != NULL);
         REQUIRE(i == n->get_value());

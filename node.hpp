@@ -12,8 +12,8 @@ class Node
 
         ObjectType get_value();
         void set_value(ObjectType value);
-        int get_key();
-        void set_key(int key);
+        long get_key();
+        void set_key(long key);
         Node<ObjectType> * get_left();
         Node<ObjectType> * get_right();
         Node<ObjectType> * get_parent();
@@ -32,7 +32,7 @@ class Node
         Node<ObjectType> * left;
         Node<ObjectType> * right;
         Node<ObjectType> * parent;
-        int key;
+        long key;
         ObjectType value;
         bool red;
 };
@@ -68,13 +68,13 @@ void Node<ObjectType>::set_value(ObjectType _value)
 }
 
 template <class ObjectType>
-int Node<ObjectType>::get_key()
+long Node<ObjectType>::get_key()
 {
     return key;
 }
 
 template <class ObjectType>
-void Node<ObjectType>::set_key(int _key)
+void Node<ObjectType>::set_key(long _key)
 {
     key = _key;
 }

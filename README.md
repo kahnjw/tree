@@ -2,6 +2,27 @@
 
 A Red Black Tree Implemented in C++
 
+## Usage
+
+At this point, this project is an experiment, but it may be fun to tinker
+with and optimize. Here are basic usage instructions.
+
+```c++
+#include "tree.hpp"
+
+int main(int argc, const char* argv[])
+{
+    Tree<int> gdp = Tree<int>();
+    int delta;
+
+    gdp.set("united states", 16768100);
+    gdp.set("china", 9181204);
+
+    delta = gdp.get("united states") - gdp.get("china");
+}
+
+```
+
 ## Run the tests
 
 Validate output:

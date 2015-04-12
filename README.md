@@ -5,7 +5,7 @@ A Red Black Tree Implemented in C++
 ## Usage
 
 At this point, this project is an experiment, but it may be fun to tinker
-with and optimize. Here are basic usage instructions.
+with and optimize. Here is a basic usage example.
 
 ```c++
 #include "tree.hpp"

@@ -12,13 +12,14 @@ with and optimize. Here are basic usage instructions.
 
 int main(int argc, const char* argv[])
 {
-    Tree<int> gdp = Tree<int>();
-    int delta;
+    Tree<double> stellarMass = Tree<double>();
+    double delta;
 
-    gdp.set("united states", 16768100);
-    gdp.set("china", 9181204);
+    stellarMass.set("Sun", 1.0);
+    stellarMass.set("Sirius", 2.02);
+    stellarMass.set("R136a1", 256.0);
 
-    delta = gdp.get("united states") - gdp.get("china");
+    delta = stellarMass.get("R136a1") - stellarMass.get("Sun");
 
     // ...
 

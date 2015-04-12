@@ -10,7 +10,7 @@ with and optimize. Here are basic usage instructions.
 ```c++
 #include "tree.hpp"
 
-int main(int argc, const char* argv[])
+int main()
 {
     Tree<double> stellarMass = Tree<double>();
     double delta;

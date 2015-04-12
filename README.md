@@ -19,6 +19,10 @@ int main(int argc, const char* argv[])
     gdp.set("china", 9181204);
 
     delta = gdp.get("united states") - gdp.get("china");
+
+    // ...
+
+    return 0;
 }
 
 ```

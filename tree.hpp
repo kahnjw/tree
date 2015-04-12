@@ -13,7 +13,7 @@ class Tree
         Tree();
         ~Tree();
 
-        void insert(string key, ObjectType value);
+        void set(string key, ObjectType value);
         ObjectType get(string key);
         void trinode_restructure(Node<ObjectType> * child);
         void recolor(Node<ObjectType> * child);
@@ -277,7 +277,7 @@ Node<ObjectType> *Tree<ObjectType>::search(long key, Node<ObjectType> *leaf)
 }
 
 template <class ObjectType>
-void Tree<ObjectType>::insert(string key, ObjectType value)
+void Tree<ObjectType>::set(string key, ObjectType value)
 {
     const long hash_key = sdbm(key.c_str());
 
@@ -301,7 +301,7 @@ ObjectType Tree<ObjectType>::get(string key)
 
     if (found == NULL) {
         object = new ObjectType();
-        insert(key, *object);
+        set(key, *object);
         return *object;
     }
 

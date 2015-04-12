@@ -26,7 +26,7 @@ TEST_CASE("Insertion stress test", "[Stress Tests]")
         for(j = 0; j < interval; j++) {
             j_str = to_string(j);
             start = clock();
-            t->insert(j_str, j);
+            t->set(j_str, j);
             end = clock();
 
             sum += (end - start);
@@ -63,7 +63,7 @@ TEST_CASE("Lookup stress test", "[Stress Tests]")
 
         for(j = 0; j < interval; j++) {
             j_str = to_string(j);
-            t->insert(j_str, j);
+            t->set(j_str, j);
             start = clock();
             t->get(j_str);
             end = clock();
